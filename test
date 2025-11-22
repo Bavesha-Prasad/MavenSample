@@ -33,6 +33,11 @@ sudo apt-get install docker.io
 sudo apt install git
 sudo apt install nano
 create a git repo example
+in git bash:from that folder 
+    git init 
+    git add .
+    git commit -m "message"
+    .....
 git clone //your repo
 cd repo Name
 nano Dockerfile
