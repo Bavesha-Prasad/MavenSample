@@ -48,3 +48,38 @@ sudo docker build -t fileName .
 sudo docker run -d -p 9090:8080 filename
 
 on broser ipaddress:9090\gitreponame
+
+script
+pipeline {
+    agent any
+    tools{
+        maven 'maven3'// modify jdk and maven with names here
+    }
+    stages {
+        stage('git repo & clean') {
+            steps {
+                 bat """if exist myjavaapp (
+                        rmdir /s /q myjavaapp
+                      )"""
+                //bat "rmdir  /s /q mavenjava"
+                bat "git clone https://github.com/adityapanyala/myjavaapp.git"
+                bat "mvn clean -f myjavaapp"
+            }
+        }
+        stage('install') {
+            steps {
+                bat "mvn install -f myjavaapp" 
+            }
+        }
+        stage('test') {
+            steps {
+                bat "mvn test -f myjavaapp"
+            }
+        }
+        stage('package') {
+            steps {
+                bat "mvn package -f myjavaapp"
+            }
+        }
+    }
+}
